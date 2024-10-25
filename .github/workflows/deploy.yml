@@ -33,10 +33,7 @@ jobs:
 
     - name: Apply Terraform
       id: apply
-      run: |
-        terraform apply -auto-approve
-        echo "MASTER_NODE_IP=$(terraform output -raw master_node_ip)" >> $GITHUB_ENV
-        echo "WORKER_NODE_IP=$(terraform output -raw worker_node_ip)" >> $GITHUB_ENV
+      run: terraform apply -auto-approve
 
   setup-master-node:
     runs-on: ubuntu-latest
