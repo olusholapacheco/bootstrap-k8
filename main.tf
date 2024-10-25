@@ -9,19 +9,19 @@ resource "tls_private_key" "bootstrap_k8s_key" {
 }
 
 resource "local_file" "ssh_private_key" {
-  content  = tls_private_key.k8s_key.private_key_pem
+  content  = tls_private_key.bootstrap_k8s_key.private_key_pem
   filename = "${path.module}/id_rsa"
 }
 
 resource "local_file" "ssh_public_key" {
-  content  = tls_private_key.k8s_key.public_key_pem
+  content  = tls_private_key.bootstrap_k8s_key.public_key_pem
   filename = "${path.module}/id_rsa.pub"
 }
 
 # Create AWS key pair
 resource "aws_key_pair" "bootstrap_k8s_key_pair" {
   key_name   = var.ssh_key_name
-  public_key = tls_private_key.k8s_key.public_key_openssh
+  public_key = tls_private_key.bootstrap_k8s_key.public_key_openssh
 }
 
 # Get VPC
@@ -121,13 +121,13 @@ resource "aws_security_group" "bootstrap_k8s_sg" {
 resource "aws_instance" "bootstrap_k8s_master" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
-  security_groups        = [aws_security_group.k8s_sg.name]
-  key_name               = aws_key_pair.k8s_key_pair.key_name
+  security_groups        = [aws_security_group.bootstrap_k8s_sg.name]
+  key_name               = aws_key_pair.bootstrap_k8s_key_pair.key_name
   user_data              = templatefile("./master.sh", {
     s3bucket_name = var.bucket_name,
-    region        = "eu-west-2"
+    region        = var.aws_region
   })
-  iam_instance_profile   = aws_iam_instance_profile.s3_profile.name
+  iam_instance_profile = aws_iam_instance_profile.s3_profile.name
 
   root_block_device {
     volume_size           = 30
@@ -144,9 +144,9 @@ resource "aws_instance" "bootstrap_k8s_worker" {
   count                  = 2
   ami                    = var.ami_id
   instance_type          = var.instance_type
-  security_groups        = [aws_security_group.k8s_sg.name]
-  key_name               = aws_key_pair.k8s_key_pair.key_name
-  iam_instance_profile   = aws_iam_instance_profile.s3_profile.name
+  security_groups        = [aws_security_group.bootstrap_k8s_sg.name]
+  key_name               = aws_key_pair.bootstrap_k8s_key_pair.key_name
+  iam_instance_profile = aws_iam_instance_profile.s3_profile.name
   user_data              = templatefile("workers.sh", {
     s3bucket_name = var.bucket_name,
     worker_number = count.index
