@@ -50,3 +50,25 @@ This repo is part of my journey to rebuild confidence and skills in DevOps by le
 ├── variables.tf               # Input variables for Terraform
 └── workers.sh                 # Script to configure and join worker nodes
 
+
+
+---
+
+##  GitHub Actions Workflow
+
+This repo uses GitHub Actions (`.github/workflows/deploy.yml`) to automate everything:
+
+-  Provision EC2 infrastructure using Terraform  
+-  SSH into each node and run the setup scripts  
+-  Bootstrap the Kubernetes cluster using `kubeadm`  
+-  Deploy Kubernetes manifests from the `manifest/` folder
+
+---
+
+## In Progress / Next Steps
+
+- [x] Bootstrap cluster with `kubeadm`
+- [ ] Add working sample app 
+- [ ] Expose the app with a `Service` or Ingress
+- [ ] Add monitoring (e.g., Prometheus, Grafana)
+- [ ] Document teardown process
