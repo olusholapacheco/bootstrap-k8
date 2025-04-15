@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "AWS region to deploy infrastructure"
   type        = string
-  default     = "eu-west-2"
+  default     = "eu-west-1"
 }
 
 variable "instance_type" {
@@ -13,7 +13,7 @@ variable "instance_type" {
 variable "ami_id" {
   description = "AMI ID"
   type        = string
-  default     = "ami-0e8d228ad90af673b"
+  default     = "ami-04da26f654d3383cf"
 }
 
 variable "ssh_key_name" {
@@ -31,5 +31,5 @@ variable "cidr_blocks" {
 variable "bucket_name" {
   description = "S3 bucket name"
   type        = string
-  default     = "bootstrap-k8s-bucket"
+  default     = "terraform-state-prod-2026"
 }

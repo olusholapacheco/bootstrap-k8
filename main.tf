@@ -26,7 +26,7 @@ resource "aws_key_pair" "bootstrap_k8s_key_pair" {
 
 # Get VPC
 data "aws_vpc" "selected" {
-  id = "vpc-0101e46fe901d663b"
+  id = "vpc-0e519291d11e7d07a"
 }
 
 # Create security group
