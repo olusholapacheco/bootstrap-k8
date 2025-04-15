@@ -13,7 +13,7 @@ variable "instance_type" {
 variable "ami_id" {
   description = "AMI ID"
   type        = string
-  default     = "ami-04da26f654d3383cf"
+  default     = "ami-0f0c3baa60262d5b9"
 }
 
 variable "ssh_key_name" {
