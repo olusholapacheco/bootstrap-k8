@@ -29,7 +29,7 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Initialize Terraform
-      run: terraform init -backend-config="terraform-state-prod-2026" -backend-config="key=terraform-state-prod-2026/terraform.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}" -backend-config="dynamodb_table=terraform-state-lock-2026"
+      run: terraform init -reconfigure -backend-config="terraform-state-prod-2026" -backend-config="key=terraform-state-prod-2026/terraform.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}" -backend-config="dynamodb_table=terraform-state-lock-2026"
 
     - name: Apply Terraform
       id: apply
