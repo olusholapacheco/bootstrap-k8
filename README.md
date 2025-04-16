@@ -72,3 +72,19 @@ This repo uses GitHub Actions (`.github/workflows/deploy.yml`) to automate every
 - [ ] Expose the app with a `Service` or Ingress
 - [ ] Add monitoring (e.g., Prometheus, Grafana)
 - [ ] Document teardown process
+
+
+## Build in progress
+A simple Python Background Job Queue App on Kubernetes
+The full picture:
+A user sends a job (uploading an image). FastAPI receives the request and places the job in a Redis Queue (RQ). A background worker picks up the job, processes it (resizing the image), and stores the result. Monitoring is set up with Prometheus + Grafana.
+
+
+## Core App Components:
+
+FastAPI	- Handles incoming HTTP requests, e.g., "upload this image"
+Redis	- Message broker — temporarily holds background jobs
+RQ Worker -	Background job processor that pulls jobs from Redis
+PostgreSQL -	Stores metadata 
+Persistent Volume	- Where resized images (or results) are stored
+Prometheus + Grafana - 	For monitoring metrics and creating dashboards
