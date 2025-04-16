@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USER }}/bootstrap-fastapi:latest . /app
+        run: docker build -t ${{ secrets.DOCKERHUB_USER }}/bootstrap-fastapi:latest ./app
 
       - name: Push Docker image to Docker Hub
         run: docker push ${{ secrets.DOCKERHUB_USER }}/bootstrap-fastapi:latest
