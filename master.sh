@@ -53,7 +53,7 @@ ufw disable
 #Installing Kubernetes tools
 apt update
 # apt install kubelet kubeadm kubectl -y
-apt install -y kubeadm kubelet kubectl
+apt install -y kubeadm=1.28.1-1.1 kubelet=1.28.1-1.1 kubectl=1.28.1-1.1
 
 #next line is getting EC2 instance IP, for kubeadm to initiate cluster
 #we need to get EC2 internal IP address- default ENI is eth0
