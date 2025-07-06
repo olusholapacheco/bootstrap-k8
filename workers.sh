@@ -54,11 +54,13 @@ ufw disable
 apt update
 # apt install kubelet kubeadm kubectl -y
 apt install -y kubeadm=1.28.1-1.1 kubelet=1.28.1-1.1 kubectl=1.28.1-1.1
+apt-mark hold kubelet kubeadm kubectl
+
 
 
 #next line is getting EC2 instance IP, for kubeadm to initiate cluster
-#we need to get EC2 internal IP address- default ENI is eth0
-export ipaddr=`ip address|grep eth0|grep inet|awk -F ' ' '{print $2}' |awk -F '/' '{print $1}'`
+# Get EC2 internal IP address (used to join the cluster)
+export ipaddr=$(ip address show eth0 | grep inet | awk '{print $2}' | cut -d/ -f1)
 
 
 # the kubeadm init won't work entel remove the containerd config and restart it.
